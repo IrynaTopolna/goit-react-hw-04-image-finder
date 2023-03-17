@@ -2,13 +2,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import PropTypes from 'prop-types';
 import { BsSearch } from 'react-icons/bs';
-import {
-  Button,
-  ButtonLabel,
-  Form,
-  Input,
-  SearchbarStyles,
-} from './Searchbar.styled';
+import { Button, Form, Input, SearchbarStyles } from './Searchbar.styled';
 
 export default function Searchbar({ onSearch }) {
   const [value, setValue] = useState('');

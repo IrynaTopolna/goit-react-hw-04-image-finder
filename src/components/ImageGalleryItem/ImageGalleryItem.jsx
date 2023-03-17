@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Image } from './ImageGalleryItem.styled';
 import Modal from 'components/Modal';
 
-export default function ImageGalleryItem({ smallImg, largeImg, tags }) {
+function ImageGalleryItem({ smallImg, largeImg, tags }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -23,3 +23,5 @@ ImageGalleryItem.propTypes = PropTypes.shape({
   largeImg: PropTypes.string.isRequired,
   tags: PropTypes.string.isRequired,
 }).isRequired;
+
+export default ImageGalleryItem;
