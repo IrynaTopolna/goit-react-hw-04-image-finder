@@ -1,32 +1,21 @@
-import { Component } from 'react';
-import Modal from 'components/Modal';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Image } from './ImageGalleryItem.styled';
+import Modal from 'components/Modal';
 
-class ImageGalleryItem extends Component {
-  state = {
-    showModal: false,
-  };
+export default function ImageGalleryItem({ smallImg, largeImg, tags }) {
+  const [showModal, setShowModal] = useState(false);
 
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
-
-  render() {
-    const { smallImg, largeImg, tags } = this.props;
-    return (
-      <>
-        <Image src={smallImg} alt={tags} onClick={this.toggleModal} />
-        {this.state.showModal && (
-          <Modal onClose={this.toggleModal}>
-            <img src={largeImg} alt={tags} />
-          </Modal>
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      <Image src={smallImg} alt={tags} onClick={() => setShowModal(true)} />
+      {showModal && (
+        <Modal onClose={() => setShowModal(false)}>
+          <img src={largeImg} alt={tags} />
+        </Modal>
+      )}
+    </>
+  );
 }
 
 ImageGalleryItem.propTypes = PropTypes.shape({
@@ -34,5 +23,3 @@ ImageGalleryItem.propTypes = PropTypes.shape({
   largeImg: PropTypes.string.isRequired,
   tags: PropTypes.string.isRequired,
 }).isRequired;
-
-export default ImageGalleryItem;

@@ -1,6 +1,7 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import PropTypes from 'prop-types';
+import { BsSearch } from 'react-icons/bs';
 import {
   Button,
   ButtonLabel,
@@ -9,56 +10,50 @@ import {
   SearchbarStyles,
 } from './Searchbar.styled';
 
-class Searchbar extends Component {
-  state = {
-    value: '',
+export default function Searchbar({ onSearch }) {
+  const [value, setValue] = useState('');
+
+  const handleInput = evt => {
+    const inputValue = evt.currentTarget.value.toLowerCase();
+
+    setValue(inputValue);
   };
 
-  handleInput = evt => {
-    const value = evt.currentTarget.value.toLowerCase();
-
-    this.setState({ value });
-  };
-
-  handleSubmit = evt => {
-    const word = this.state.value.trim();
+  const handleSubmit = evt => {
+    const word = value.trim();
 
     evt.preventDefault();
 
-    if (word.trim() === '') {
+    if (word === '') {
       toast.error('Please, enter your search request');
       return;
     }
 
-    this.setState({ value: '' });
-    this.props.onSearch(word);
+    onSearch(word);
+    setValue('');
   };
 
-  render() {
-    return (
-      <SearchbarStyles>
-        <Form onSubmit={this.handleSubmit}>
-          <Button type="submit">
-            <ButtonLabel>Search</ButtonLabel>
-          </Button>
+  return (
+    <SearchbarStyles>
+      <Form onSubmit={handleSubmit}>
+        <Button type="submit">
+          <BsSearch size="24" />
+        </Button>
 
-          <Input
-            className="input"
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            value={this.state.value}
-            onChange={this.handleInput}
-          />
-        </Form>
-      </SearchbarStyles>
-    );
-  }
+        <Input
+          className="input"
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          value={value}
+          onChange={handleInput}
+        />
+      </Form>
+    </SearchbarStyles>
+  );
 }
 
 Searchbar.propTypes = {
   onSearch: PropTypes.func.isRequired,
 };
-
-export default Searchbar;
